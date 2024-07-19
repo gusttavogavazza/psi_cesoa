@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\SimuladorDeEmprestimo\Dto\**" />
+    <EmbeddedResource Remove="Services\SimuladorDeEmprestimo\Dto\**" />
+    <None Remove="Services\SimuladorDeEmprestimo\Dto\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\C067058.Domain\C067058.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

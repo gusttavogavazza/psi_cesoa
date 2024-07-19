@@ -1,0 +1,114 @@
+﻿@model C067058.Site.Models.Resultado.ResultadoViewModel
+
+@{
+    Layout = "";
+}
+
+<div class="container">
+
+    <hr style="border-top: 1px solid dimgray; width: 70%; margin: 50px auto" />
+
+    <ul class="nav nav-tabs">
+        @for (int i = 0; i < Model.Tabelas?.Count; i++)
+        {
+            <li class="nav-item" role="presentation">
+                <button class="nav-link @(i == 0 ? "active":"")" id="@("painel-" + i)-tab" data-bs-toggle="tab" data-bs-target="#@("painel-" + i)-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">@Model.Tabelas[i].Identificacao</button>
+            </li>
+        }
+    </ul>
+
+    <div class="tab-content" id="myTabContent" style="width: 100%; margin: auto; margin-bottom: 20px; padding: 30px; background: white;">
+
+        @for (int i = 0; i < Model.Tabelas.Count; i++)
+        {
+            <div class="tab-pane fade show @(i == 0 ? "active":"")" id="@("painel-" + i)-pane" role="tabpanel" pane tabindex=@i>                
+
+                <div class="container text-center">
+                    <div class="row justify-content-md-center" style="margin: 20px;">
+                        <div class="col">
+                            @string.Format("{0:C}", Model.ValorFinanciado)
+                            <br /><h6 style="color: dimgray; font-size: small">Valor do empréstimo</h6>
+                        </div>
+
+                        <div class="col">
+                            @string.Format("{0:C}", Model.TaxaDeJurosMensal)
+                            <br /><h6 style="color: dimgray; font-size: small">Taxa de juros</h6>
+                        </div>
+
+                        <div class="col">
+                            <span>@Model.Periodo meses</span>
+                            <br /><h6 style="color: dimgray; font-size: small">Período</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="width: 65%; margin: 30px auto" />
+
+                <div class="container text-center">
+                    <div class="row justify-content-md-center" style="margin: 20px;">
+                        <div class="col">
+                            @string.Format("{0:C}", Model.Tabelas[i].Total)
+                            <br /><h6 style="color: dimgray; font-size: small">Valor total a pagar</h6>
+                        </div>
+
+                        <div class="col">
+                            @string.Format("{0:C}", Model.Tabelas[i].TotalJurosMensal)
+                            <br /><h6 style="color: dimgray; font-size: small">Total dos juros</h6>
+                        </div>
+
+                        <div class="col">&nbsp;</div>
+
+                    </div>
+                </div>
+
+                <hr style="width: 65%; margin: 30px auto" />
+
+                <table class="table table-striped table-sm table-responsive" style="width: 90%; margin: auto;">
+                    
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="text-end" style="width: 23% !important;">Parcela</th>
+                            <th class="text-end" style="width: 23% !important;">Juros</th>
+                            <th class="text-end" style="width: 23% !important;">Amortização</th>
+                            <th class="text-end" style="width: 23% !important;">Saldo devedor</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var prestacao in Model.Tabelas[i].Prestacoes)
+                        {
+                            <tr>
+                                <th>@prestacao.Indice</th>
+                                <td class="text-end">@string.Format("{0:C}", prestacao.Valor)</td>
+                                <td class="text-end">@string.Format("{0:C}", prestacao.JurosMensal)</td>
+                                <td class="text-end">@string.Format("{0:C}", prestacao.AmortizacaoMensal)</td>
+                                <td class="text-end">
+                                    @{
+                                        var valorExibido = string.Format("{0:C}", prestacao.SaldoDevedor);
+
+                                        var testeValor = string.Format("{0:N}", prestacao.SaldoDevedor);
+                                        if (testeValor == "-0,00") valorExibido = string.Format("{0:C}", 0);
+                                    }
+                                    
+                                    @valorExibido
+                                </td>
+                            </tr>
+                        }
+                        <tr style="border-top: 2px solid black;" >
+                            <th></th>
+                            <td style="font-weight: bold;" class="text-end">@string.Format("{0:C}", @Model.Tabelas[i].Total)</td>
+                            <td style="font-weight: bold;" class="text-end">@string.Format("{0:C}", @Model.Tabelas[i].TotalJurosMensal)</td>
+                            <td style="font-weight: bold;" class="text-end">@string.Format("{0:C}", @Model.Tabelas[i].TotalAmortizacaoMensal)</td>
+                            <th></th>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+
+</div>

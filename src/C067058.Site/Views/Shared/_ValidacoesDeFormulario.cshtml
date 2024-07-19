@@ -1,0 +1,62 @@
+﻿<script src="~/lib/jquery-validation/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/jquery-maskmoney/jquery.maskMoney.min.js"></script>
+<script src="~/lib/jquery-mask/jquery.mask.min.js"></script>
+
+<script>
+    // $.validator.methods.range = function (value, element, param) {
+    //     var globalizedValue = value.replace(",", ".");
+    //     return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    // };
+
+    // $.validator.methods.number = function (value, element) {
+    //     return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    // };
+
+    // $.validator.methods.date = function (value, element) {
+    //     var date = value.split("/");
+    //     return this.optional(element) || !/Invalid|NaN/.test(new Date(date[2], date[1], date[0]).toString());
+    // };
+
+    $('.campo-moeda').maskMoney({prefix: "R$ ", thousands: ".", decimal: "," });
+
+    $('.campo-percentual').maskMoney({prefix: "", thousands: ".", decimal: "," });
+
+    // $('.campo-percentual')
+    //     .mask('#9V##', {
+    //         translation: {
+    //             'V': { pattern: /[\,]/ },
+    //             '#': { pattern: /[0-9]/, optional: false },
+    //         }
+    //     });
+
+    $('.campo-inteiro-999')
+        .mask('V##', {
+            translation: {
+                'V': { pattern: /[0-9]/, optional: false },
+                '#': { pattern: /[0-9]/, optional: false },
+            }
+        });
+
+    $('.campo-percentual')
+        .on('blur', function() {
+            var vetor = $(this).val().split(',');
+
+            var parteDezena = vetor[0];
+            var parteDecimal = vetor[1];
+
+            if (parteDezena != "") {
+                if (typeof parteDecimal === "undefined") parteDecimal = "00";
+                if (parteDecimal === "") parteDecimal = "00";
+                if (parteDecimal.length == 1) parteDecimal += "0";
+
+                $(this).val(vetor[0] + "," + parteDecimal)
+            }
+
+            if($(this).val().length > 0) $(this).val( $(this).val() + '%' );
+        })
+        .on('focus',function(){
+            $(this).val( $(this).val().replace('%','') ); 
+        });
+
+</script>

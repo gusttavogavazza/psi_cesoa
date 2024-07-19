@@ -1,0 +1,27 @@
+﻿@model C067058.Site.Models.Index.SeiViewModel
+
+<div id="index-container" style="margin-top: 20px;">
+
+     <div class="row justify-content-md-center">
+
+        <div class="form-group col-8">
+
+            <span class="input-group">
+                @Html.EditorFor(m => m.Valor, new { htmlAttributes = new { @class = "form-control campo-moeda", @placeholder = @Html.DisplayNameFor(m => m.Valor), @maxlength=17 } })
+                @Html.EditorFor(m => m.TaxaDeJuros, new { htmlAttributes = new { @class = "form-control campo-percentual", @placeholder = @Html.DisplayNameFor(m => m.TaxaDeJuros), @maxlength = 5 } })
+                @Html.EditorFor(m => m.Periodo, new { htmlAttributes = new { @class = "form-control campo-inteiro-999", @placeholder = @Html.DisplayNameFor(m => m.Periodo), @type = "text", @maxlength = 3 } })
+                <button id="calcular" class="btn btn-outline-dark">Calcular</button>
+            </span>
+
+        </div>
+
+    </div>
+
+    <div id="resultado-container"></div>
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidacoesDeFormulario"); }
+    <script src="~/scripts/Views/SimuladorDeEmprestimosImobiliarios/Index.js"></script>
+}

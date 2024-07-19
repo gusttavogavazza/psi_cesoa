@@ -1,0 +1,11 @@
+﻿body {
+    background: whitesmoke;
+}
+
+.aviso-de-erro {
+    position: absolute;
+    font-size: 11px;
+    z-index: 9999;
+    color: red;
+    font-weight: bold;
+}
